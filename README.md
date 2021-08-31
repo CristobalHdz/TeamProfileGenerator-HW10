@@ -1,104 +1,157 @@
-# 11 Express.js: Note Taker
+# 10 Object-Oriented Programming: Team Profile Generator
 
 ## Your Task
 
-Your assignment is to modify starter code to create an application called Note Taker that can be used to write and save notes. This application will use an Express.js back end and will save and retrieve note data from a JSON file.
+Your task is to build a Node.js command-line application that takes in information about employees on a software engineering team, then generates an HTML webpage that displays summaries for each person. Testing is key to making code maintainable, so you’ll also write a unit test for every part of your code and ensure that it passes each test.
 
-The application’s front end has already been created. It's your job to build the back end, connect the two, and then deploy the entire application to Heroku.
+Because this application won’t be deployed, you’ll need to provide a link to a walkthrough video that demonstrates its functionality and all of the tests passing. You’ll need to submit a link to the video AND add it to the readme of your project.
 
+> **Note**: There is no starter code for this assignment.
 
 ## User Story
 
+```md
+AS A manager
+I WANT to generate a webpage that displays my team's basic info
+SO THAT I have quick access to their emails and GitHub profiles
 ```
-AS A small business owner
-I WANT to be able to write and save notes
-SO THAT I can organize my thoughts and keep track of tasks I need to complete
-```
-
 
 ## Acceptance Criteria
 
+```md
+GIVEN a command-line application that accepts user input
+WHEN I am prompted for my team members and their information
+THEN an HTML file is generated that displays a nicely formatted team roster based on user input
+WHEN I click on an email address in the HTML
+THEN my default email program opens and populates the TO field of the email with the address
+WHEN I click on the GitHub username
+THEN that GitHub profile opens in a new tab
+WHEN I start the application
+THEN I am prompted to enter the team manager’s name, employee ID, email address, and office number
+WHEN I enter the team manager’s name, employee ID, email address, and office number
+THEN I am presented with a menu with the option to add an engineer or an intern or to finish building my team
+WHEN I select the engineer option
+THEN I am prompted to enter the engineer’s name, ID, email, and GitHub username, and I am taken back to the menu
+WHEN I select the intern option
+THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu
+WHEN I decide to finish building my team
+THEN I exit the application, and the HTML is generated
 ```
-GIVEN a note-taking application
-WHEN I open the Note Taker
-THEN I am presented with a landing page with a link to a notes page
-WHEN I click on the link to the notes page
-THEN I am presented with a page with existing notes listed in the left-hand column, plus empty fields to enter a new note title and the note’s text in the right-hand column
-WHEN I enter a new note title and the note’s text
-THEN a Save icon appears in the navigation at the top of the page
-WHEN I click on the Save icon
-THEN the new note I have entered is saved and appears in the left-hand column with the other existing notes
-WHEN I click on an existing note in the list in the left-hand column
-THEN that note appears in the right-hand column
-WHEN I click on the Write icon in the navigation at the top of the page
-THEN I am presented with empty fields to enter a new note title and the note’s text in the right-hand column
-```
-
 
 ## Mock-Up
 
-The following images show the web application's appearance and functionality:
+The following image shows a mock-up of the generated HTML’s appearance and functionality:
 
-![Existing notes are listed in the left-hand column with empty fields on the right-hand side for the new note’s title and text.](./Assets/11-express-homework-demo-01.png)
+![HTML webpage titled “My Team” features five boxes listing employee names, titles, and other key info.](./Assets/10-object-oriented-programming-homework-demo.png)
 
-![Note titled “Balance accounts” reads, “Balance account books by end of day Monday,” with other notes listed on the left.](./Assets/11-express-homework-demo-02.png)
-
+The styling in the image is just an example, so feel free to add your own.
 
 ## Getting Started
 
-On the back end, the application should include a `db.json` file that will be used to store and retrieve notes using the `fs` module.
+This homework will combine many of the skills we've covered so far. In addition to the User Story and Acceptance Criteria, we’ve provided some guidelines to help get started.
 
-The following HTML routes should be created:
+Your application should use [Jest](https://www.npmjs.com/package/jest) for running the unit tests and [Inquirer](https://www.npmjs.com/package/inquirer) for collecting input from the user. The application will be invoked by using the following command:
 
-* `GET /notes` should return the `notes.html` file.
+```bash
+node index.js
+```
 
-* `GET *` should return the `index.html` file.
+It is recommended that you start with a directory structure that looks like the following example:
 
-The following API routes should be created:
+```md
+.
+├── __tests__/             //jest tests
+│   ├── Employee.test.js
+│   ├── Engineer.test.js
+│   ├── Intern.test.js
+│   └── Manager.test.js
+├── dist/                  // rendered output (HTML) and CSS style sheet      
+├── lib/                   // classes
+├── src/                   // template helper code 
+├── .gitignore             // indicates which folders and files Git should ignore
+├── index.js               // runs the application
+└── package.json           
+```
 
-* `GET /api/notes` should read the `db.json` file and return all saved notes as JSON.
+**Important**: Make sure that you remove `dist` from the `.gitignore` file so that Git will track this folder and include it when you push up to your application's repository.
 
-* `POST /api/notes` should receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client. You'll need to find a way to give each note a unique id when it's saved (look into npm packages that could do this for you).
+The application must include `Employee`, `Manager`, `Engineer`, and `Intern` classes. The tests for these classes (in the `_tests_` directory) must ALL pass.
 
+The first class is an `Employee` parent class with the following properties and methods:
 
-## Bonus
+* `name`
 
-You haven’t learned how to handle DELETE requests, but this application offers that functionality on the front end. As a bonus, try to add the DELETE route to the application using the following guideline:
+* `id`
 
-* `DELETE /api/notes/:id` should receive a query parameter that contains the id of a note to delete. To delete a note, you'll need to read all notes from the `db.json` file, remove the note with the given `id` property, and then rewrite the notes to the `db.json` file.
+* `email`
 
+* `getName()`
+
+* `getId()`
+
+* `getEmail()`
+
+* `getRole()`&mdash;returns `'Employee'`
+
+The other three classes will extend `Employee`.
+
+In addition to `Employee`'s properties and methods, `Manager` will also have the following:
+
+* `officeNumber`
+
+* `getRole()`&mdash;overridden to return `'Manager'`
+
+In addition to `Employee`'s properties and methods, `Engineer` will also have the following:
+
+* `github`&mdash;GitHub username
+
+* `getGithub()`
+
+* `getRole()`&mdash;overridden to return `'Engineer'`
+
+In addition to `Employee`'s properties and methods, `Intern` will also have the following:
+
+* `school`
+
+* `getSchool()`
+
+* `getRole()`&mdash;overridden to return `'Intern'`
+
+Finally, although it’s not a requirement, consider adding validation to ensure that user input is in the proper format.
 
 ## Grading Requirements
 
 This homework is graded based on the following criteria: 
+
+### Deliverables: 15%
+
+* A sample HTML file generated using the application must be submitted.
+
+* Your GitHub repository containing your application code.
+
+
+### Walkthrough Video: 32%
+
+* A walkthrough video that demonstrates the functionality of the Team Profile Generator and passing tests must be submitted, and a link to the video should be included in your README file.
+
+* The walkthrough video must show all four tests passing from the command line.
+
+* The walkthrough video must demonstrate how a user would invoke the application from the command line.
+
+* The walkthrough video must demonstrate how a user would enter responses to all of the prompts in the application.
+
+* The walkthrough video must demonstrate a generated HTML file that matches the user input.
 
 
 ### Technical Acceptance Criteria: 40%
 
 * Satisfies all of the preceding acceptance criteria plus the following:
 
-  * Application front end must connect to an Express.js back end.
+	* Uses the [Inquirer package](https://www.npmjs.com/package/inquirer).
 
-  * Application back end must store notes that have a unique id in a JSON file.
+	* Uses the [Jest package](https://www.npmjs.com/package/jest) for a suite of unit tests.
 
-  * Application must be deployed to Heroku.
-
-
-### Deployment: 36%
-
-* Application deployed at live URL.
-
-* Application loads with no errors.
-
-* Application GitHub URL submitted.
-
-* GitHub repository contains application code.
-
-
-### Application Quality: 11%
-
-* Application console is free of errors.
-
+  * The application must have `Employee`, `Manager`, `Engineer`, and `Intern` classes.
 
 ### Repository Quality: 13%
 
@@ -110,21 +163,17 @@ This homework is graded based on the following criteria:
 
 * Repository contains multiple descriptive commit messages.
 
-* Repository contains quality README file with description, screenshot, and link to deployed application.
-
-
-### Bonus: +10 Points
-
-* Application allows users to delete notes.
-
+* Repository contains a high-quality readme with description and a link to a walkthrough video.
 
 ## Review
 
-You are required to submit BOTH of the following for review:
+You are required to submit the following for review:
 
-* The URL of the functional, deployed application.
+* A walkthrough video that demonstrates the functionality of the application and passing tests.
 
-* The URL of the GitHub repository, with a unique name and a README describing the project.
+* A sample HTML file generated using your application.
 
-- - -
+* The URL of the GitHub repository, with a unique name and a readme describing the project.
+
+---
 © 2021 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
