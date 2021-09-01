@@ -80,6 +80,30 @@ function appMenu() {
     });
   }
 
+  function createTeam() {
+
+    inquirer.prompt([
+      {
+        type: "list",
+        name: "memberAddition",
+        message: "Which type of team member would you like to add?",
+        choices: [
+          "Engineer",
+          "Intern",
+          "There are no more team members"
+        ]
+      }
+    ]).then(userChoice => {
+      if (userChoice.memberAddition == "Engineer") {
+        return addEngineer();
+      } else if (userChoice.memberAddition == "Intern") {
+        return addIntern();
+      } else {
+        buildTeam();
+      }
+    }
+    );
+  }
 
 }
 
