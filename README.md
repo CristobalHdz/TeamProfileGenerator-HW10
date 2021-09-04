@@ -6,7 +6,7 @@
 
 by Cristobal Hernandez
 
-Published video URL: 
+Published video URL: https://www.youtube.com/watch?v=rdU0ipnPzvk&ab_channel=CristobalHernandez
 
 
 # Section 02: General Information
